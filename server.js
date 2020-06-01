@@ -24,27 +24,28 @@ connection.connect((err, res) => {
   //     }
   //   );
 });
-app.put('/add/:name', (req, res) => {
+app.put('/add/:name/:phone', (req, res) => {
   let name1 = req.params.name;
+  let phone1 = req.params.phone;
   console.log(name1);
   //res.send('name2');
-  connection.query(
-    'INSERT INTO logins (name,phone) VALUES("vinay",123)',
-    (err, res) => {
-      err ? console.log(err) : console.log('data updated');
-    }
-  );
+  let insertQuery = 'INSERT INTO ?? (??,??) VALUES (?,?)';
+  let query = mysql.format(insertQuery, [
+    'logins',
+    'name',
+    'phone',
+    name1,
+    phone1,
+  ]);
+  connection.query(query, (err, res) => {
+    err ? console.log(err) : console.log('data updated');
+  });
   res.send('value added');
 });
-app.get('/', (req, res) => {
-  //   let name1 = req.params.name;
-  //   console.log(name1);
-  res.send('name1');
-  //   connection.query(
-  //     'INSERT INTO logins (name,phone) VALUES(name1,123)',
-  //     (err, res) => {
-  //       err ? console.log(err) : console.log('data updated');
-  //     }
-  //   );
-  //   res.send('value added');
+
+app.get('/visitors', (req, res) => {
+  let a = connection.query('SELECT * FROM logins', (err, data) => {
+    err ? console.log(err) : console.log(data);
+  });
+  res.send('All data');
 });
