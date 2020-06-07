@@ -1,10 +1,15 @@
 const express = require('express');
 const app = express();
-const port = 3000;
-const route = express.Router();
+const port = 4000;
 const mysql = require('mysql');
+const cors = require('cors');
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
+app.use(cors());
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 app.listen(port, () => {
   console.log('App running');
 });
@@ -25,6 +30,7 @@ connection.connect((err, res) => {
   //     }
   //   );
 });
+
 app.put('/add/:name/:phone', (req, res) => {
   let name1 = req.params.name;
   let phone1 = req.params.phone;
